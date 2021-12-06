@@ -2,6 +2,9 @@ use v5.20;
 use experimental 'signatures';
 use List::Util qw(sum); 
 
+# As a perl onliner:
+# perl -MList::Util=sum -0 -F'\n' -e 'sub f{my @v=@F;foreach my $pos(0..length($F[0])-1){my $b=sum(map{substr($_, $pos, 1)} @v)>=scalar(@v)/2;@v=grep{substr($_, $pos, 1)==($_[0] == $b)}@v;return oct("0b".$v[0]) if scalar(@v)==1;}} print f(0)*f(1)' Day3.txt
+
 my @data = <DATA>;
 chomp @data;
 
