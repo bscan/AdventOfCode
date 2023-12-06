@@ -5,10 +5,9 @@ let content = `Time:        61     67     75     71
 Distance:   430   1036   1307   1150`
 
 // Parse
-const lines = content.split("\n")
-const time = parseInt(lines[0].match(/\d+/g)!.join(''))
-const distance = parseInt(lines[1].match(/\d+/g)!.join(''))
+const [time, distance] = content.split("\n").map(line => parseInt(line.match(/\d+/g)!.join('')))
 
+// Brute force 
 const brute = range(time).map(x => x*(time-x)).filter(x=> x > distance).length
 console.log(`Brute Force: ${brute}`)
 
