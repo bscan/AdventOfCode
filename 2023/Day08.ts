@@ -8,17 +8,17 @@ const content = readFileSync(filePath, 'utf8').split("\n");
 const directions = content.shift()!.split('') as Direction[];
 content.shift(); // Skip empty line
 
-interface Node { L: string; R: string; }
+interface Node { L: string; R: string; nodename?: string }
 type Direction = 'L' | 'R';
 const nodes: Record<string, Node> = {}
 const start_nodes: string[] = []
 
 for(let line of content){
-    let match = line.match(/(\w+)\s+=\s+\((\w+),\s+(\w+)\)/)! as string[];
+    let match = line.match(/^(?<nodename>\w+)\s+=\s+\((?<L>\w+),\s+(?<R>\w+)\)$/)!.groups as {nodename: string; L: string; R: string}
 
-    nodes[match[1]] = {'L': match[2] , 'R': match[3]}
-    if( match[1].match(/\w\wA/))
-        start_nodes.push(match[1])
+    nodes[match.nodename] = {'L': match.L , 'R': match.R}
+    if( match.nodename.match(/\w\wA/))
+        start_nodes.push(match.nodename)
 }
 
 function find_num_steps(start_loc: string) :number {
